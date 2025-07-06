@@ -39,8 +39,8 @@ COPY --from=compile-typescript-stage \
 RUN mkdir dist && touch dist/.placeholder
 
 RUN \
-  --mount=type=secret,id=foundry_username,required=false \
-  --mount=type=secret,id=foundry_password,required=false \
+  --mount=type=secret,id=foundry_username,uid=1000,required=false \
+  --mount=type=secret,id=foundry_password,uid=1000,required=false \
   npm install && \
   if [ -f /run/secrets/foundry_username ] && [ -f /run/secrets/foundry_password ]; then \
   ./authenticate.js "$(cat /run/secrets/foundry_username)" "$(cat /run/secrets/foundry_password)" cookiejar.json && \
